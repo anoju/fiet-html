@@ -4,20 +4,41 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function scrollAnimation() {
-  const animateElements = document.querySelectorAll('.animate-scroll, .animate-scroll2');
+  const animateElements = document.querySelectorAll('.animate-scroll, .animate-scroll2, .sticky-box .animate-on');
   const animateOnElements = document.querySelectorAll('.animate-on');
   const _Y = 50;
   const _scale = 0.3;
 
   function updateElementStyle(element) {
+    const stickyBox = element.closest('.sticky-box');
     const rect = element.getBoundingClientRect();
     const windowHeight = window.innerHeight;
     const windowCenter = windowHeight / 2;
     const elementCenter = rect.top + rect.height / 2;
 
-    let progress = 1 - (elementCenter - windowCenter) / (windowHeight / 2);
-    progress = Math.max(0, Math.min(1, progress));
+    let progress = 1;
+    if (stickyBox) {
+      const stickyRect = stickyBox.getBoundingClientRect();
+      if (element.classList.contains('animate-on')) {
+        if (stickyRect.top > -stickyBox.offsetHeight && stickyRect.bottom - windowHeight < 0) {
+          if (!element.classList.contains('on')) element.classList.add('on');
+        } else {
+          if (element.classList.contains('on')) element.classList.remove('on');
+        }
+        return;
+      }
 
+      if (stickyRect.top <= 0 && stickyRect.bottom >= windowHeight) {
+        progress = Math.abs(stickyRect.top / (stickyRect.height - windowHeight));
+      } else if (stickyRect.bottom < windowHeight) {
+        progress = 1;
+      } else {
+        progress = 0;
+      }
+    } else {
+      progress = 1 - (elementCenter - windowCenter) / (windowHeight / 2);
+      progress = Math.max(0, Math.min(1, progress));
+    }
     const translateY = _Y - progress * _Y;
     const scale = _scale + progress * (1 - _scale);
     const scale2 = 2 - scale;
@@ -62,12 +83,15 @@ function scrollAnimation() {
   const animateOnObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-          if (!entry.target.classList.contains('on')) {
-            entry.target.classList.add('on');
+        const stickyBox = entry.target.closest('.sticky-box');
+        if (!stickyBox) {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+            if (!entry.target.classList.contains('on')) {
+              entry.target.classList.add('on');
+            }
+          } else {
+            entry.target.classList.remove('on');
           }
-        } else {
-          entry.target.classList.remove('on');
         }
       });
     },
@@ -124,7 +148,7 @@ function fixedBtn() {
     if (scrollPosition >= documentHeight - 5) {
       // 스크롤이 페이지 마지막에 도달하면 방향 상관없이 on 클래스 추가
       fixedButton.classList.add('on');
-    } else if (scrollY > lastScrollY) {
+    } else if (scrollY >= lastScrollY) {
       // 아래로 스크롤할 때
       fixedButton.classList.add('on');
     } else {
