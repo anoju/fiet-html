@@ -20,7 +20,7 @@ function scrollAnimation() {
     if (stickyBox) {
       const stickyRect = stickyBox.getBoundingClientRect();
       if (element.classList.contains('animate-on')) {
-        if (stickyRect.top > -stickyBox.offsetHeight && stickyRect.bottom - windowHeight < 0) {
+        if (stickyRect.top > -stickyBox.offsetHeight && stickyRect.bottom - windowHeight - windowHeight / 4 < 0) {
           if (!element.classList.contains('on')) element.classList.add('on');
         } else {
           if (element.classList.contains('on')) element.classList.remove('on');
