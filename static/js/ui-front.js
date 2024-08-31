@@ -110,6 +110,7 @@ function fixedBtn() {
     const scrollY = window.scrollY;
     const scrollPosition = scrollY + window.innerHeight;
     const sectionPosition = section.getBoundingClientRect().top + window.scrollY;
+    const documentHeight = document.documentElement.scrollHeight;
 
     // 타겟 요소가 보이기 시작하는지 확인
     // if (scrollPosition > sectionPosition + fixedButton.offsetHeight) {
@@ -119,8 +120,11 @@ function fixedBtn() {
       fixedButton.classList.remove('white');
     }
 
-    // 스크롤 방향에 따라 클래스 추가/제거
-    if (scrollY > lastScrollY) {
+    // 스크롤 방향에 따라 on 클래스 추가/제거
+    if (scrollPosition >= documentHeight - 5) {
+      // 스크롤이 페이지 마지막에 도달하면 방향 상관없이 on 클래스 추가
+      fixedButton.classList.add('on');
+    } else if (scrollY > lastScrollY) {
       // 아래로 스크롤할 때
       fixedButton.classList.add('on');
     } else {
