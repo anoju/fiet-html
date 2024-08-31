@@ -1,4 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
+  scrollAnimation();
+  fixedBtn();
+});
+
+function scrollAnimation() {
   const animateElements = document.querySelectorAll('.animate-scroll, .animate-scroll2');
   const animateOnElements = document.querySelectorAll('.animate-on');
   const _Y = 50;
@@ -16,26 +21,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const translateY = _Y - progress * _Y;
     const scale = _scale + progress * (1 - _scale);
     const scale2 = 2 - scale;
-    const opacity = progress;
+    // const opacity = progress;
 
     if (element.classList.contains('animate-scroll')) {
       element.style.transform = `translateY(${translateY}px) scale(${scale})`;
-      element.style.opacity = opacity;
+      // element.style.opacity = opacity;
     }
     if (element.classList.contains('animate-scroll2')) {
       element.style.transform = `translateY(${translateY}px) scale(${scale2})`;
-      element.style.opacity = opacity;
+      // element.style.opacity = opacity;
     }
   }
 
   function resetElementStyle(element) {
     if (element.classList.contains('animate-scroll')) {
       element.style.transform = `translateY(${_Y}px) scale(${_scale})`;
-      element.style.opacity = '0';
+      // element.style.opacity = '0';
     }
     if (element.classList.contains('animate-scroll2')) {
       element.style.transform = `translateY(${_Y}px) scale(${1 + (1 - _scale)})`;
-      element.style.opacity = '0';
+      // element.style.opacity = '0';
     }
   }
 
@@ -91,4 +96,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.addEventListener('scroll', updateVisibleElements);
   window.addEventListener('resize', updateVisibleElements);
-});
+}
+
+function fixedBtn() {
+  const section = document.querySelector('.section-2');
+  const fixedButton = document.querySelector('.bottom-btn');
+
+  let lastScrollY = window.scrollY; // 이전 스크롤 위치 저장
+
+  // 타겟 요소의 위치 계산
+  const sectionPosition = section.getBoundingClientRect().top + window.scrollY;
+  const sectionHeight = section.offsetHeight;
+
+  window.addEventListener('scroll', function () {
+    const scrollY = window.scrollY;
+    const scrollPosition = scrollY + window.innerHeight;
+
+    // 타겟 요소가 보이기 시작하는지 확인
+    if (scrollPosition > sectionPosition && scrollPosition < sectionPosition + sectionHeight + window.innerHeight) {
+      fixedButton.classList.add('white');
+    } else {
+      fixedButton.classList.remove('white');
+    }
+
+    // 스크롤 방향에 따라 클래스 추가/제거
+    if (scrollY > lastScrollY) {
+      // 아래로 스크롤할 때
+      fixedButton.classList.add('on');
+    } else {
+      // 위로 스크롤할 때
+      fixedButton.classList.remove('on');
+    }
+
+    // 현재 스크롤 위치를 업데이트
+    lastScrollY = scrollY;
+  });
+}
