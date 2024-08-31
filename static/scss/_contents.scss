@@ -3,19 +3,18 @@
   @return math.div($size, 2);
 }
 .wrap {
-  width: 72rem;
   min-height: 100vh;
   min-height: 100dvh;
-  margin: 0 auto;
-  background-color: #fff;
   text-align: center;
   padding-bottom: 27rem;
 }
 [class^='section-'] {
   position: relative;
-  > * {
-    position: relative;
-  }
+}
+.sec-inr {
+  position: relative;
+  width: 72rem;
+  margin: 0 auto;
 }
 .z-1 {
   z-index: 1;
@@ -48,9 +47,13 @@
     background: linear-gradient(to bottom, #000 26%, rgba(0, 0, 0, 0) 100%);
   }
 }
-// .section-2 {
-//   height: 437rem;
-// }
+.section-2 {
+  //height: 437rem;
+  background-color: #fff;
+}
+.section-3 {
+  background-color: #fff;
+}
 [class^='bg-img-'] {
   overflow: hidden;
   i {
@@ -376,7 +379,6 @@
   left: 0;
   bottom: 0;
   width: 100%;
-  padding: 7rem 7rem 7rem;
   background-color: #000;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 25%, rgba(0, 0, 0, 1) 100%);
   z-index: 5;
@@ -389,6 +391,9 @@
     background-color: #fff;
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 25%, rgba(255, 255, 255, 1) 100%);
   }
+  .sec-inr {
+    padding: 7rem 7rem 7rem;
+  }
   .btn {
     display: flex;
     width: 100%;
@@ -399,10 +404,10 @@
     border-radius: 3rem;
   }
 }
-@media (min-width: 700px) {
+@media (max-width: 700px) {
   .bottom-btn {
-    left: 50%;
-    width: 72rem;
-    margin-left: -36rem;
+    .sec-inr {
+      width: auto;
+    }
   }
 }
