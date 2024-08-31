@@ -105,15 +105,15 @@ function fixedBtn() {
   let lastScrollY = window.scrollY; // 이전 스크롤 위치 저장
 
   // 타겟 요소의 위치 계산
-  const sectionPosition = section.getBoundingClientRect().top + window.scrollY;
-  const sectionHeight = section.offsetHeight;
 
   window.addEventListener('scroll', function () {
     const scrollY = window.scrollY;
     const scrollPosition = scrollY + window.innerHeight;
+    const sectionPosition = section.getBoundingClientRect().top + window.scrollY;
 
     // 타겟 요소가 보이기 시작하는지 확인
-    if (scrollPosition > sectionPosition && scrollPosition < sectionPosition + sectionHeight + window.innerHeight) {
+    // if (scrollPosition > sectionPosition + fixedButton.offsetHeight) {
+    if (scrollPosition > sectionPosition) {
       fixedButton.classList.add('white');
     } else {
       fixedButton.classList.remove('white');
