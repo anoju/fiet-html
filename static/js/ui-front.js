@@ -20,7 +20,8 @@ function scrollAnimation() {
     if (stickyBox) {
       const stickyRect = stickyBox.getBoundingClientRect();
       if (element.classList.contains('animate-on')) {
-        if (stickyRect.top > -stickyBox.offsetHeight && stickyRect.bottom - windowHeight - windowHeight / 4 < 0) {
+        const inrRect = stickyBox.querySelector('.sticky-inr').getBoundingClientRect();
+        if (stickyRect.top <= -(windowHeight / 4) && inrRect.top <= 0) {
           if (!element.classList.contains('on')) element.classList.add('on');
         } else {
           if (element.classList.contains('on')) element.classList.remove('on');
@@ -55,6 +56,9 @@ function scrollAnimation() {
   }
 
   function resetElementStyle(element) {
+    if (element.classList.contains('animate-on')) {
+      if (element.classList.contains('on')) element.classList.remove('on');
+    }
     if (element.classList.contains('animate-scroll')) {
       element.style.transform = `translateY(${_Y}px) scale(${_scale})`;
       // element.style.opacity = '0';
