@@ -49,7 +49,7 @@
   .sticky-inr {
     position: sticky;
     top: 0;
-    padding: 20rem 0;
+    padding: 10rem 0;
     overflow: hidden;
   }
 }
@@ -75,6 +75,7 @@
   background-color: #fff;
 }
 [class^='bg-img-'] {
+  overflow: hidden;
   .sticky-inr {
     padding: 0;
     height: 100vh;
@@ -470,6 +471,16 @@
   .bottom-btn {
     .sec-inr {
       width: auto;
+    }
+  }
+}
+@media (max-width: 1000px) {
+  .vh-box {
+    padding: 5rem 0;
+  }
+  .sticky-box {
+    .sticky-inr {
+      padding: 5rem 0;
     }
   }
 }
