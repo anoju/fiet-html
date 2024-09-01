@@ -38,6 +38,10 @@
   }
 }
 .sticky-box {
+  &.sticky-h-1_5 {
+    height: 150vh;
+    height: 150dvh;
+  }
   &.sticky-h-2 {
     height: 200vh;
     height: 200dvh;
